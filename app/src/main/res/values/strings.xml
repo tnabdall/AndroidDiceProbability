@@ -7,4 +7,7 @@
     <string name="sSims">100000</string>
     <string name="sRolls">3</string>
     <string name = "result">The result is: </string>
+    <string name = "setRoll">Set the current dice roll?</string>
+    <string name="desLabel">Desired Dice Roll</string>
+    <string name="setLabel">Current Dice Roll</string>
 </resources>
