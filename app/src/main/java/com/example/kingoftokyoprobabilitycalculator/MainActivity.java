@@ -12,6 +12,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -85,7 +86,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         Probability prob = new Probability(desRollStr,Integer.parseInt(rollsS));
         float result = prob.Calculate(Integer.parseInt(simsS));
-        rolls.setText(Float.toString(result));
+        TextView resultText = findViewById(R.id.resultW);
+        resultText.setText("The result is: ".concat(new DecimalFormat("#.#").format(result*100)).concat("%"));
 
 
         /*
