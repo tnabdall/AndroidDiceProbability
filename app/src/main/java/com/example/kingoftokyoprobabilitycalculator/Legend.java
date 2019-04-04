@@ -1,6 +1,11 @@
 package com.example.kingoftokyoprobabilitycalculator;
 
 public class Legend {
+    /**
+     * Translates a substring to the corresponding integer value
+     * @param x the substring
+     * @return integer value corresponding to substring
+     */
     public static int getInt(String x){
         int val = -1;
         switch(x){

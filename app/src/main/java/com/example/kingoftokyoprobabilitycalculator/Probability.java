@@ -1,5 +1,6 @@
 package com.example.kingoftokyoprobabilitycalculator;
 
+
 public class Probability {
 
     private Dice dice = new Dice();
@@ -10,6 +11,11 @@ public class Probability {
     private boolean setDice = false;
     private String setDiceStr = "";
 
+    /**
+     * Makes a probability calculator
+     * @param desRoll A string formatted with chars 123ahew that indicates the desired dice roll.
+     * @param numberOfRolls How many times you can roll the dice
+     */
     public Probability(String desRoll, int numberOfRolls){
         if (desRoll.length() == 6 && numberOfRolls>0){
             for (int i = 0; i < desRoll.length(); i++){
@@ -23,6 +29,12 @@ public class Probability {
         //System.out.println(desiredRoll);
     }
 
+    /**
+     *
+     * @param desRoll A string formatted with chars 123ahew that indicates the desired dice roll.
+     * @param numberOfRolls How many times you can roll the dice
+     * @param setRoll A string formatted with chars 123ahe that indicates the current dice roll.
+     */
     public Probability(String desRoll, int numberOfRolls, String setRoll){
         if (desRoll.length() == 6 && numberOfRolls>0 && setRoll.length()==6){
             for (int i = 0; i < desRoll.length(); i++){
@@ -39,6 +51,11 @@ public class Probability {
         //System.out.println(desiredRoll);
     }
 
+    /**
+     * Calculates the probability of the roll
+     * @param totalTurns Number of simulations being performed
+     * @return The probability
+     */
     public float Calculate(int totalTurns){
         if (totalTurns<1) {
             return 0.0f;
@@ -81,6 +98,11 @@ public class Probability {
 
     }
 
+    /**
+     * Checks to see after rolling the dice if the roll was a success
+     * @param rollThis an array specifying whether each dice should be rolled or not
+     * @return Have we gotten our desired roll?
+     */
     public boolean isSuccess(boolean[] rollThis){
         for (int i = 0; i < rollThis.length; i++){
             if (rollThis[i]==true){
@@ -90,6 +112,10 @@ public class Probability {
         return true;
     }
 
+    /**
+     * Checks the current roll against the desired dice roll
+     * @return An array that specifies which dice should be rerolled if possible
+     */
     public boolean[] compareRolls(){
         boolean[] rollThis = new boolean[6];
         for (int i = 0; i<6; i++){
