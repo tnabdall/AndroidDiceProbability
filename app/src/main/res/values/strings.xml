@@ -10,4 +10,5 @@
     <string name = "setRoll">Set the current dice roll?</string>
     <string name="desLabel">Desired Dice Roll</string>
     <string name="setLabel">Current Dice Roll</string>
+    <string name="sOptionsBtn">Options</string>
 </resources>
