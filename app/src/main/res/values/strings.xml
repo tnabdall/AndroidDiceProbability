@@ -2,7 +2,7 @@
     <string name="app_name">King of Tokyo Probability Calculator</string>
     <string name="textview">King of Tokyo Probability Calculator</string>
     <string name="NumSims">Number of Simulations: </string>
-    <string name="sNumRolls">Number of Rolls: </string>
+    <string name="sNumRolls">Number of Rolls Left: </string>
     <string name = "Button">Calculate</string>
     <string name="sSims">100000</string>
     <string name="sRolls">3</string>
@@ -11,4 +11,11 @@
     <string name="desLabel">Desired Dice Roll</string>
     <string name="setLabel">Current Dice Roll</string>
     <string name="sOptionsBtn">Options</string>
+    <string name="simsHint"><![CDATA[Positive Number > 10000]]></string>
+    <string name="numDiceLabel">Number of Dice:</string>
+    <string name="numFaces">Number of Faces on Die:</string>
+    <string name="sumLabel">Sum Mode</string>
+    <string name="desDiceModeLabel">Desired Dice Mode</string>
+    <string name="desSumLabel">Desired Sum</string>
+    <string name="sSum">20</string>
 </resources>

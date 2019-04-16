@@ -1,5 +1,8 @@
 package com.example.kingoftokyoprobabilitycalculator;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,14 +13,17 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class MainActivity extends AppCompatActivity{
 
+    static final int OPTIONS_REQUEST = 101;
+    protected SetOptions opt = new SetOptions();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View v) {
                 calculate();
+            }
+        });
+
+        Button optionsBut = (Button) findViewById(R.id.optionsButton);
+        optionsBut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchOptions();
             }
         });
 
@@ -159,11 +173,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         float result;
         if (!setRoll) {
             Probability prob = new Probability(desRollStr, Integer.parseInt(rollsS));
-            result = prob.Calculate(Integer.parseInt(simsS));
+            result = prob.Calculate(opt.getNumberSims());
         }
         else{
             Probability prob = new Probability(desRollStr,Integer.parseInt(rollsS),setRollStr);
-            result = prob.Calculate(Integer.parseInt(simsS));
+            result = prob.Calculate(opt.getNumberSims());
         }
         TextView resultText = findViewById(R.id.resultW);
         resultText.setText("The result is: ".concat(new DecimalFormat("#.#").format(result*100)).concat("%"));
@@ -177,14 +191,84 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         */
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        String text = parent.getItemAtPosition(position).toString();
-        Toast.makeText(parent.getContext(),text,Toast.LENGTH_SHORT).show();
+
+    public void launchOptions(){
+        //setContentView(R.layout.options);
+
+
+        Intent intent = new Intent(this,OptionsActivity.class);
+        startActivityForResult(intent,OPTIONS_REQUEST);
+
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if(requestCode==OPTIONS_REQUEST){
+            try {
+                opt = (SetOptions) data.getSerializableExtra("optionSet");
+                if(opt.isSumMode()){
+                    setContentView(R.layout.activity_sum);
+                }
+                else{
+                    setContentView(R.layout.activity_main);
+                }
+            }
+            catch (Exception e){
+                Toast.makeText(this, "Error: Couldn't get options.", Toast.LENGTH_SHORT).show();
+            }
+        }
+        resume();
     }
+
+   protected void resume(){
+       Button calculateButton = (Button) findViewById(R.id.calculateButton);
+       calculateButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               calculate();
+           }
+       });
+
+       Button optionsBut = (Button) findViewById(R.id.optionsButton);
+       optionsBut.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               launchOptions();
+           }
+       });
+
+       CheckBox setDiceCheck = (CheckBox) findViewById(R.id.checkBox2);
+       setDiceCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           @Override
+           public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+               ArrayList<Spinner> setRollList = new ArrayList<Spinner>();
+               setRollList.add((Spinner) findViewById(R.id.spinner7));
+               setRollList.add((Spinner) findViewById(R.id.spinner8));
+               setRollList.add((Spinner) findViewById(R.id.spinner9));
+               setRollList.add((Spinner) findViewById(R.id.spinner10));
+               setRollList.add((Spinner) findViewById(R.id.spinner11));
+               setRollList.add((Spinner) findViewById(R.id.spinner12));
+               TextView label = (TextView) findViewById(R.id.setDiceLabel);
+
+               for (int i = 0; i<setRollList.size(); i++){
+                   if (isChecked) {
+                       setRollList.get(i).setVisibility(View.VISIBLE);
+                       if (i==0) {
+                           label.setVisibility(View.VISIBLE);
+                       }
+                   }
+                   else{
+                       setRollList.get(i).setVisibility(View.INVISIBLE);
+                       if (i==0) {
+                           label.setVisibility(View.INVISIBLE);
+                       }
+                   }
+               }
+
+
+           }
+       });
+
+       setupSpinners();
+   }
 }
